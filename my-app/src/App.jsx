@@ -9,16 +9,14 @@ function App() {
   
   const [preferiti, setPreferiti] = useState([])
 
-  function AggiungiPreferiti(array) {
-    if (!preferiti.includes(array)) {
-      setPreferiti([...preferiti, array])
+  function aggiungiPreferiti(film) {
+    if (!preferiti.includes(film)) {
+      setPreferiti([...preferiti, film])
     }
   }
 
-  function RimuoviPreferiti(array) {
-    if (preferiti.includes(array)) {
-      setPreferiti([...preferiti])
-    }
+  function rimuoviPreferiti(film) {
+    setPreferiti(preferiti.filter((x) => x !== film))
   }
   
   return (
@@ -27,16 +25,30 @@ function App() {
         <h1>Film</h1>
         <ul>
           {filmArray.map((x, index) => (
-            <Film key={index} titolo={x} stato={preferiti.includes(x)} add={AggiungiPreferiti} remove={RimuoviPreferiti} />
+            <Film
+              key={index}
+              titolo={x}
+              stato={preferiti.includes(x)}
+              aggiungiPreferiti={aggiungiPreferiti}
+              rimuoviPreferiti={rimuoviPreferiti}
+            />
           ))}
         </ul>
         <h2>Preferiti</h2>
         <div>
-          {preferiti.length < 0? (<ul>{preferiti.map((x, index)=> (<li key={index}>{x}</li>))}</ul>) : (<p>Aggiungi un film tra i preferiti</p>)} 
+          {preferiti.length > 0 ? (
+            <ul>
+              {preferiti.map((x, index) => (
+                <li key={index}>{x}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>Aggiungi un film tra i preferiti</p>
+          )}
         </div>
       </div>
     </>
-  )
+  );
 
 }
 
