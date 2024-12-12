@@ -7,16 +7,40 @@ export function Registrazione() {
     email: "",
     password: "",
   });
-  
+  const [error, setError] = useState("");
+
   const handleChange = (event) => {
-    const {name, value} = event.target
-    setData((prevdata) => ({ ...prevdata,[name]:value}));
-  }
+    const { name, value } = event.target;
+    if (name === "password") {
+      if (
+        value.length < 6 ||
+        !/\d/.test(value) ||
+        !/[!@#$%^&*()]/.test(value)
+      ) {
+        setError(
+          "La password deve essere di almeno 6 caratteri, di cuoi almeno un numero e un carattere speciale"
+        );
+      } else {
+        setError("");
+      }
+    }
+
+    setData((prevdata) => ({ ...prevdata, [name]: value }));
+  };
 
   const handleSubmit = (event) => {
-  event.preventDefault();
-  
-  }
+    event.preventDefault();
+    const existUser = localStorage.getItem("user");
+    if (existUser) {
+      const parseExistUser = JSON.parse(existUser);
+      if (parseExistUser.email === data.email) {
+        setError("Email già registrata");
+        return;
+      }
+    }
+    localStorage.setItem("user", JSON.stringify(data));
+    setError("");
+  };
 
   return (
     <div>
@@ -35,7 +59,7 @@ export function Registrazione() {
           name="cognome"
           id="cognome"
           onChange={handleChange}
-          value={data.nome}
+          value={data.cognome}
         />
         <label htmlFor="email">Email:</label>
         <input
@@ -43,7 +67,7 @@ export function Registrazione() {
           name="email"
           id="email"
           onChange={handleChange}
-          value={data.nome}
+          value={data.email}
         />
         <label htmlFor="password">Password:</label>
         <input
@@ -51,8 +75,12 @@ export function Registrazione() {
           name="password"
           id="password"
           onChange={handleChange}
-          value={data.nome}
+          value={data.password}
         />
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <button type="submit" disabled={!!error}>
+          Registrati
+        </button>
       </form>
     </div>
   );
