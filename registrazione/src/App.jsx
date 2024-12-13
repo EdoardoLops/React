@@ -1,15 +1,17 @@
-import './App.css'
-import { Registrazione } from './registrazione'
+import "./App.css";
+import { Dashboard } from "./dashboard";
+import { Login } from "./login";
+import { Registrazione } from "./registrazione";
 
 function App() {
-
-return(
+  const isLogged = localStorage.getItem("isLogged");
+  return (
     <div>
-        <Registrazione />
+      <Registrazione />
+      {isLogged ? <Dashboard /> : <Login />}
+      <Login />
     </div>
-    
-) 
-
+  );
 }
 
-export default App
+export default App;

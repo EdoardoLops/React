@@ -81,7 +81,7 @@ export function Registrazione() {
         />
         <label htmlFor="email">Email:</label>
         <input
-          type="text"
+          type="email"
           name="email"
           id="email"
           onChange={handleChange}
@@ -89,7 +89,7 @@ export function Registrazione() {
         />
         <label htmlFor="password">Password:</label>
         <input
-          type="text"
+          type="password"
           name="password"
           id="password"
           onChange={handleChange}
