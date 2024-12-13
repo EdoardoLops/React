@@ -8,6 +8,7 @@ export function Registrazione() {
     password: "",
   });
   const [error, setError] = useState("");
+  const [errorEmail, setErrorEmail] = useState("");
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -30,16 +31,33 @@ export function Registrazione() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const existUser = localStorage.getItem("user");
-    if (existUser) {
-      const parseExistUser = JSON.parse(existUser);
-      if (parseExistUser.email === data.email) {
-        setError("Email già registrata");
-        return;
-      }
+    if (error) return;
+    const existData = localStorage.getItem("users");
+    let utentiRegistrati = [];
+
+    // verifica se esiste l'array vuoto
+    if (existData) {
+      utentiRegistrati = JSON.parse(existData);
     }
-    localStorage.setItem("user", JSON.stringify(data));
-    setError("");
+
+    // verifica se l'email esiste o no
+    const existEmail = utentiRegistrati.some((x) => x.email === data.email);
+
+    // verifica se l'email non esiste
+    if (existEmail) {
+      setErrorEmail("Email già registrata");
+      return;
+    }
+
+    utentiRegistrati.push(data);
+    localStorage.setItem("users", JSON.stringify(utentiRegistrati));
+    setData({
+      nome: "",
+      cognome: "",
+      email: "",
+      password: "",
+    });
+    console.log("hai cliccato submit");
   };
 
   return (
@@ -81,6 +99,7 @@ export function Registrazione() {
         <button type="submit" disabled={!!error}>
           Registrati
         </button>
+        {errorEmail && <p style={{ color: "red" }}>{errorEmail}</p>}
       </form>
     </div>
   );
