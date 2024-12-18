@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { userContext } from "./userContex";
 
-export function Login() {
+export function Login({ setIsLogged }) {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+
   const [messaggio, setMessaggio] = useState("");
+  const {login} = useContext(userContext)
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -16,18 +19,16 @@ export function Login() {
     event.preventDefault();
     const users = localStorage.getItem("users");
     const parseUsers = JSON.parse(users);
-    const userExist = parseUsers.some(
+    const userExist = parseUsers.find(
       (x) => x.email === data.email && x.password === data.password
     );
     if (userExist) {
       setMessaggio("Login effettuato con successo");
-      const isLogged = localStorage.setItem("isLogged", true);
+      login(userExist)
     } else {
       setMessaggio("Credenziali errate");
     }
   };
-
-  
 
   return (
     <div>

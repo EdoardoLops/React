@@ -1,15 +1,19 @@
 import "./App.css";
 import { Dashboard } from "./dashboard";
+import { Fakeusers } from "./fakedatabase";
 import { Login } from "./login";
 import { Registrazione } from "./registrazione";
+import { UserProvider } from "./userContex";
 
 function App() {
-  const isLogged = localStorage.getItem("isLogged");
   return (
     <div>
-      <Registrazione />
-      {isLogged ? <Dashboard /> : <Login />}
-      <Login />
+      <Fakeusers />
+      <UserProvider>
+        <Registrazione />
+        <Login />
+        <Dashboard />
+      </UserProvider>
     </div>
   );
 }
