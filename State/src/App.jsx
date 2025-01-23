@@ -1,10 +1,10 @@
-import { AlertClock } from "./allert";
+import { Counter } from "./Counter";
 import "./App.css";
 
 function App() {
   return (
     <div>
-      <AlertClock />
+      <Counter num={2}/>
     </div>
   );
 }
