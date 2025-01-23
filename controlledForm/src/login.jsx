@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function Login({onLogin}) {
+export function Login({ onLogin }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -15,12 +15,12 @@ export function Login({onLogin}) {
     }));
   }
 
-  function handleLogin(event){
-    event.preventDefault(); 
+  function handleLogin(event) {
+    event.preventDefault();
     onLogin(formData);
   }
 
-  function handleReset(){
+  function handleReset() {
     setFormData({
       username: "",
       password: "",
@@ -44,13 +44,13 @@ export function Login({onLogin}) {
           checked={formData.remember}
           onChange={handleChange}
         />
+        <button type="submit" disabled={isLoginDisabled} onClick={onLogin}>
+          login
+        </button>
+        <button type="button" onClick={handleReset}>
+          reset
+        </button>
       </form>
-      <button type="submit" disabled={isLoginDisabled} onClick={onLogin}>
-        login
-      </button>
-      <button type="button" onClick={handleReset}>
-        reset
-      </button>
     </div>
   );
 }
