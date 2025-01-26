@@ -98,7 +98,7 @@ export function Message() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyPress}
-          placeholder="TScrivi un Messaggio"
+          placeholder="Scrivi un Messaggio"
           style={{ width: "80%", padding: "5px" }}
         />
         <button
